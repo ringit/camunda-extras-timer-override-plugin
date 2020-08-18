@@ -1,0 +1,89 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
+}
+
+dependencies {
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:2.3.1.RELEASE"
+    annotationProcessor "org.springframework.boot:spring-boot-autoconfigure-processor:2.3.1.RELEASE"
+
+    implementation(project(":timer-override-plugin"))
+
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:2.3.1.RELEASE"))
+    implementation(platform("org.camunda.bpm:camunda-bom:7.13.0"))
+
+    implementation("org.springframework:spring-context")
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    implementation("javax.validation:validation-api")
+    implementation("org.camunda.bpm:camunda-engine-spring")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testRuntime("org.hibernate.validator:hibernate-validator:6.1.5.Final")
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = findProperty('ossrhUsername')
+                password = findProperty('ossrhPassword')
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'timer-override-plugin-spring-boot-starter'
+            from components.java
+            pom {
+                name = 'Timer Override Plugin Spring Boot starter'
+                description = 'A Spring Boot starter for Camunda Process Engine Timer Override Plugin'
+                url = 'http://www.example.com/library'
+                licenses {
+                    license {
+                        name = 'MIT'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'infeligo'
+                        name = 'Mihhail Verhovtsov'
+                        email = 'mihhail.verhovtsov@ringit.ee'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/ringit/camunda-extras-timer-override-plugin.git'
+                    developerConnection = 'scm:git:ssh://github.com/ringit/camunda-extras-timer-override-plugin.git'
+                    url = 'https://github.com/ringit/camunda-extras-timer-override-plugin'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+

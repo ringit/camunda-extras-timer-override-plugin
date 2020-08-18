@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_ll67ABGYEeW7xqkBzIjHqw" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="3.5.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="Sample" name="Sample" isExecutable="true">
+    <bpmn2:startEvent id="StartEvent_1">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" sourceRef="StartEvent_1" targetRef="Step1" />
+    <bpmn2:serviceTask id="Step1" name="Step 1" camunda:async="true" camunda:delegateExpression="${stepLoggingDelegate}">
+      <bpmn2:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="step">1</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:endEvent id="EndEvent_1">
+      <bpmn2:incoming>SequenceFlow_0dseca7</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="Step1" targetRef="Timer1" />
+    <bpmn2:sequenceFlow id="SequenceFlow_1vjs9pm" sourceRef="Timer1" targetRef="Step2" />
+    <bpmn2:intermediateCatchEvent id="Timer1" name="Wait till the start of next day">
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_1vjs9pm</bpmn2:outgoing>
+      <bpmn2:timerEventDefinition id="TimerEventDefinition_09a2vog">
+        <bpmn2:timeDate xsi:type="bpmn2:tFormalExpression">${dateTime().plusDays(1).withTimeAtStartOfDay().toDate()}</bpmn2:timeDate>
+      </bpmn2:timerEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_19ffozo" sourceRef="Step2" targetRef="Timer2" />
+    <bpmn2:sequenceFlow id="SequenceFlow_02sasf2" sourceRef="Timer2" targetRef="Step3" />
+    <bpmn2:intermediateCatchEvent id="Timer2" name="Wait 1 hour">
+      <bpmn2:incoming>SequenceFlow_19ffozo</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_02sasf2</bpmn2:outgoing>
+      <bpmn2:timerEventDefinition id="TimerEventDefinition_09t1fex">
+        <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression">PT1H</bpmn2:timeDuration>
+      </bpmn2:timerEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_05u7v51" sourceRef="Step3" targetRef="Timer3" />
+    <bpmn2:sequenceFlow id="SequenceFlow_1epl27e" sourceRef="Timer3" targetRef="Step4" />
+    <bpmn2:sequenceFlow id="SequenceFlow_1p2ms4k" sourceRef="Step4" targetRef="Timer4" />
+    <bpmn2:sequenceFlow id="SequenceFlow_0dseca7" sourceRef="Timer4" targetRef="EndEvent_1" />
+    <bpmn2:intermediateCatchEvent id="Timer3" name="Wait until it is at 12:00 today">
+      <bpmn2:incoming>SequenceFlow_05u7v51</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_1epl27e</bpmn2:outgoing>
+      <bpmn2:timerEventDefinition id="TimerEventDefinition_1lvwa71">
+        <bpmn2:timeDate xsi:type="bpmn2:tFormalExpression">${dateTime().withTime(12, 0, 0, 0).toDate()}</bpmn2:timeDate>
+      </bpmn2:timerEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:intermediateCatchEvent id="Timer4" name="Wait 5 minutes">
+      <bpmn2:incoming>SequenceFlow_1p2ms4k</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_0dseca7</bpmn2:outgoing>
+      <bpmn2:timerEventDefinition id="TimerEventDefinition_1pvonbo">
+        <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression">PT5M</bpmn2:timeDuration>
+      </bpmn2:timerEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:serviceTask id="Step2" name="Step 2" camunda:delegateExpression="${stepLoggingDelegate}">
+      <bpmn2:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="step">2</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_1vjs9pm</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_19ffozo</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:serviceTask id="Step3" name="Step 3" camunda:delegateExpression="${stepLoggingDelegate}">
+      <bpmn2:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="step">3</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_02sasf2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_05u7v51</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:serviceTask id="Step4" name="Step 4" camunda:delegateExpression="${stepLoggingDelegate}">
+      <bpmn2:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="step">4</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_1epl27e</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_1p2ms4k</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:textAnnotation id="TextAnnotation_0rbc79z">
+      <bpmn2:text>Custom override for date</bpmn2:text>
+    </bpmn2:textAnnotation>
+    <bpmn2:association id="Association_10h6t3x" sourceRef="Timer1" targetRef="TextAnnotation_0rbc79z" />
+    <bpmn2:textAnnotation id="TextAnnotation_1p09n6t">
+      <bpmn2:text>Custom override for duration</bpmn2:text>
+    </bpmn2:textAnnotation>
+    <bpmn2:association id="Association_07igtao" sourceRef="Timer2" targetRef="TextAnnotation_1p09n6t" />
+    <bpmn2:textAnnotation id="TextAnnotation_0oj6nxe">
+      <bpmn2:text>Default override for duration</bpmn2:text>
+    </bpmn2:textAnnotation>
+    <bpmn2:association id="Association_1kkzqp9" sourceRef="Timer3" targetRef="TextAnnotation_0oj6nxe" />
+    <bpmn2:textAnnotation id="TextAnnotation_03tygro">
+      <bpmn2:text>Excluded from override</bpmn2:text>
+    </bpmn2:textAnnotation>
+    <bpmn2:association id="Association_0t7lbz8" sourceRef="Timer4" targetRef="TextAnnotation_03tygro" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Sample">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
+        <dc:Bounds x="155" y="207" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_3" targetElement="_BPMNShape_ServiceTask_2">
+        <di:waypoint x="191" y="225" />
+        <di:waypoint x="250" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_2" bpmnElement="Step1">
+        <dc:Bounds x="250" y="185" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="EndEvent_1">
+        <dc:Bounds x="1142" y="207" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ServiceTask_2" targetElement="IntermediateCatchEvent_0rp71dv_di">
+        <di:waypoint x="350" y="225" />
+        <di:waypoint x="392" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1vjs9pm_di" bpmnElement="SequenceFlow_1vjs9pm">
+        <di:waypoint x="428" y="225" />
+        <di:waypoint x="470" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0rp71dv_di" bpmnElement="Timer1">
+        <dc:Bounds x="392" y="207" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="373" y="250" width="78" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_19ffozo_di" bpmnElement="SequenceFlow_19ffozo">
+        <di:waypoint x="570" y="225" />
+        <di:waypoint x="622" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_02sasf2_di" bpmnElement="SequenceFlow_02sasf2">
+        <di:waypoint x="658" y="225" />
+        <di:waypoint x="700" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0nayt73_di" bpmnElement="Timer2">
+        <dc:Bounds x="622" y="207" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="613" y="250" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_05u7v51_di" bpmnElement="SequenceFlow_05u7v51">
+        <di:waypoint x="800" y="225" />
+        <di:waypoint x="842" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1epl27e_di" bpmnElement="SequenceFlow_1epl27e">
+        <di:waypoint x="878" y="225" />
+        <di:waypoint x="920" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1p2ms4k_di" bpmnElement="SequenceFlow_1p2ms4k">
+        <di:waypoint x="1020" y="225" />
+        <di:waypoint x="1062" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0dseca7_di" bpmnElement="SequenceFlow_0dseca7">
+        <di:waypoint x="1098" y="225" />
+        <di:waypoint x="1142" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0vsqj19_di" bpmnElement="Timer3">
+        <dc:Bounds x="842" y="207" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="834" y="250" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0t8w27o_di" bpmnElement="Timer4">
+        <dc:Bounds x="1062" y="207" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1044" y="250" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_189eyx4_di" bpmnElement="Step2">
+        <dc:Bounds x="470" y="185" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1e8946s_di" bpmnElement="Step3">
+        <dc:Bounds x="700" y="185" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1k4pdnr_di" bpmnElement="Step4">
+        <dc:Bounds x="920" y="185" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0rbc79z_di" bpmnElement="TextAnnotation_0rbc79z">
+        <dc:Bounds x="390" y="77" width="140" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_10h6t3x_di" bpmnElement="Association_10h6t3x">
+        <di:waypoint x="417" y="208" />
+        <di:waypoint x="452" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1p09n6t_di" bpmnElement="TextAnnotation_1p09n6t">
+        <dc:Bounds x="640" y="77" width="100" height="54" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_07igtao_di" bpmnElement="Association_07igtao">
+        <di:waypoint x="647" y="208" />
+        <di:waypoint x="679" y="131" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0oj6nxe_di" bpmnElement="TextAnnotation_0oj6nxe">
+        <dc:Bounds x="870" y="77" width="100" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1kkzqp9_di" bpmnElement="Association_1kkzqp9">
+        <di:waypoint x="868" y="209" />
+        <di:waypoint x="911" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_03tygro_di" bpmnElement="TextAnnotation_03tygro">
+        <dc:Bounds x="1090" y="77" width="100" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0t7lbz8_di" bpmnElement="Association_0t7lbz8">
+        <di:waypoint x="1088" y="209" />
+        <di:waypoint x="1131" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

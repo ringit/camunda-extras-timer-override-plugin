@@ -1,0 +1,5 @@
+rootProject.name = 'camunda-extras-timer-override-plugin'
+include 'timer-override-plugin'
+include 'timer-override-plugin-spring-boot-starter'
+include 'timer-override-plugin-spring-boot-starter-sample'
+

@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ee.ringit.extras.camunda.timeroverride.TimerOverrideAutoConfiguration
