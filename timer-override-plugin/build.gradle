@@ -41,10 +41,10 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'timer-override-plugin-spring-boot-starter'
+            artifactId = 'timer-override-plugin'
             from components.java
             pom {
-                name = 'Timer Override Plugin Spring Boot starter'
+                name = 'Timer Override Plugin'
                 description = 'A Spring Boot starter for Camunda Process Engine Timer Override Plugin'
                 url = 'https://github.com/ringit/camunda-extras-timer-override-plugin'
                 licenses {
