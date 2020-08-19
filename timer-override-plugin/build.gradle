@@ -46,11 +46,11 @@ publishing {
             pom {
                 name = 'Timer Override Plugin Spring Boot starter'
                 description = 'A Spring Boot starter for Camunda Process Engine Timer Override Plugin'
-                url = 'http://www.example.com/library'
+                url = 'https://github.com/ringit/camunda-extras-timer-override-plugin'
                 licenses {
                     license {
                         name = 'MIT'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        url = 'https://choosealicense.com/licenses/mit/'
                     }
                 }
                 developers {
@@ -58,6 +58,11 @@ publishing {
                         id = 'infeligo'
                         name = 'Mihhail Verhovtsov'
                         email = 'mihhail.verhovtsov@ringit.ee'
+                    }
+                    developer {
+                        id = 'virtual-machinist'
+                        name = 'Igor Volkov'
+                        email = 'igor.volkov@ringit.ee'
                     }
                 }
                 scm {
