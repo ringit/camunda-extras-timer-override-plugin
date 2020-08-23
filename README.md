@@ -108,11 +108,14 @@ There is a sample Camunda BPM Spring Boot Starter process application showcasing
 ## How it works
 
 The plugin works by tapping into [BPMN parsing](https://github.com/camunda/camunda-bpm-platform/blob/6fd62f5c7492b98f0187f0392dc1ea2a94342cda/engine/src/main/java/org/camunda/bpm/engine/impl/bpmn/parser/BpmnParse.java)
-mechanism. When a timer definition is parsed,
-its expression is replaced (or preserved) according to the settings. This means that yoy have
-all the freedom of defining your own expressions as complex as you want. This switch does not
+mechanism. When a timer definition is parsed, its expression is replaced (or preserved) according to the settings.
+
+This means that you have all the freedom of defining your own expressions as complex as you want. This switch does not
 create a new version of BPMN process. Disabling or enabling this plugin requires reloading
 of process definitions, e.g. via Camunda Process Engine restart.
+
+Under the hood the plugin uses reflection to swap the timer expressions as the DOM implementation used by Camunda BPM
+when parsing BPMN files is too restricted compared to something like `org.w3c.dom`.
 
 ## Credits
 
