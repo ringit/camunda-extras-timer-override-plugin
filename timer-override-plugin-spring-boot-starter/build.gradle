@@ -19,7 +19,7 @@ dependencies {
     implementation("org.camunda.bpm:camunda-engine-spring")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testRuntime("org.hibernate.validator:hibernate-validator:6.1.5.Final")
+    testRuntimeOnly("org.hibernate.validator:hibernate-validator:6.1.5.Final")
 }
 
 test {
@@ -30,6 +30,8 @@ test {
 }
 
 java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
     withJavadocJar()
     withSourcesJar()
 }

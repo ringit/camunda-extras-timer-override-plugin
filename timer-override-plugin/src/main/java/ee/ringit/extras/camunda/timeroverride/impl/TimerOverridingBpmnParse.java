@@ -7,6 +7,7 @@ import org.camunda.bpm.engine.impl.jobexecutor.TimerDeclarationImpl;
 import org.camunda.bpm.engine.impl.jobexecutor.TimerDeclarationType;
 import org.camunda.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.camunda.bpm.engine.impl.util.xml.Element;
+import org.camunda.bpm.model.bpmn.impl.BpmnModelConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -66,11 +67,11 @@ public class TimerOverridingBpmnParse extends BpmnParse {
   }
 
   private static TimerDeclarationType findTimerDeclarationType(Element timerEventDefinition) {
-    if (timerEventDefinition.element("timeDate") != null) {
+    if (timerEventDefinition.element(BpmnModelConstants.BPMN_ELEMENT_TIME_DATE) != null) {
       return TimerDeclarationType.DATE;
-    } else if (timerEventDefinition.element("timeDuration") != null) {
+    } else if (timerEventDefinition.element(BpmnModelConstants.BPMN_ELEMENT_TIME_DURATION) != null) {
       return TimerDeclarationType.DURATION;
-    } else if (timerEventDefinition.element("timeCycle") != null) {
+    } else if (timerEventDefinition.element(BpmnModelConstants.BPMN_ELEMENT_TIME_CYCLE) != null) {
       return TimerDeclarationType.CYCLE;
     } else {
       return null;
@@ -80,11 +81,11 @@ public class TimerOverridingBpmnParse extends BpmnParse {
   private static Element getValueElementForType(Element eventDefinition, TimerDeclarationType type) {
     switch (type) {
       case DATE:
-        return eventDefinition.element("timeDate");
+        return eventDefinition.element(BpmnModelConstants.BPMN_ELEMENT_TIME_DATE);
       case DURATION:
-        return eventDefinition.element("timeDuration");
+        return eventDefinition.element(BpmnModelConstants.BPMN_ELEMENT_TIME_DURATION);
       case CYCLE:
-        return eventDefinition.element("timeCycle");
+        return eventDefinition.element(BpmnModelConstants.BPMN_ELEMENT_TIME_CYCLE);
       default:
         throw new UnsupportedOperationException("Unknown TimerDeclarationType value: " + type);
     }
