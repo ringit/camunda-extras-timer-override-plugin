@@ -39,21 +39,21 @@ this behaviour.
 |-------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|
 | `camunda.bpm.timer.override.enabled`                  | Enables or disables overriding. Should be explicitly enabled for the plugin to work.                                | false                                                    |
 | `camunda.bpm.timer.override.custom-timer-expressions` | Map of custom timer expression overrides, applied to timers specified by ID. Precedes default expression overrides. | empty map                                                |
-| `camunda.timer.override.default-timer-expressions`    | Map of default timer expression overrides, applied to all times except the excluded ones.                           | date=${now()}<br/> duration=PT1S<br/> cycle=R1/PT1S      |
-| `camunda.timer.override.excluded-timers`              | List of timer IDs to exclude from any overrides. Precedes everything other property.                                | empty list                                               |
+| `camunda.bpm.timer.override.default-timer-expressions`    | Map of default timer expression overrides, applied to all times except the excluded ones.                           | date=${now()}<br/> duration=PT1S<br/> cycle=R1/PT1S      |
+| `camunda.bpm.timer.override.excluded-timers`              | List of timer IDs to exclude from any overrides. Precedes everything other property.                                | empty list                                               |
 
 Example:
 
 ```properties
-camunda.timer.override.enabled=true
+camunda.bpm.timer.override.enabled=true
 
-camunda.timer.override.custom-timer-expressions.Timer1=PT30S
-camunda.timer.override.custom-timer-expressions.Timer2=${dateTime().plusSeconds(10).toDate()}
-camunda.timer.override.custom-timer-expressions.Timer3=2021-06-20T10:00:00Z
-camunda.timer.override.default-timer-expressions.date=${now()}
-camunda.timer.override.default-timer-expressions.duration=PT1S
-camunda.timer.override.default-timer-expressions.cycle=R1/PT1S
-camunda.timer.override.excluded-timers=MyExcludedTimer,AnotherExcludedTimer
+camunda.bpm.timer.override.custom-timer-expressions.Timer1=PT30S
+camunda.bpm.timer.override.custom-timer-expressions.Timer2=${dateTime().plusSeconds(10).toDate()}
+camunda.bpm.timer.override.custom-timer-expressions.Timer3=2021-06-20T10:00:00Z
+camunda.bpm.timer.override.default-timer-expressions.date=${now()}
+camunda.bpm.timer.override.default-timer-expressions.duration=PT1S
+camunda.bpm.timer.override.default-timer-expressions.cycle=R1/PT1S
+camunda.bpm.timer.override.excluded-timers=MyExcludedTimer,AnotherExcludedTimer
 ```
 
 Things to note:
