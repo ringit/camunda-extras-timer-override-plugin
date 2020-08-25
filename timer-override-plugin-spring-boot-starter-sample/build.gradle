@@ -19,6 +19,7 @@ dependencies {
 
     implementation("org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter")
     runtimeOnly("com.h2database:h2")
+    runtimeOnly("org.hibernate.validator:hibernate-validator")
     implementation("com.sun.xml.bind:jaxb-impl:2.2.4")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
