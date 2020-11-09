@@ -9,11 +9,9 @@ import org.camunda.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.camunda.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.camunda.bpm.engine.impl.util.xml.Element;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -23,15 +21,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TimerOverridingBpmnParseTest {
+class TimerOverridingBpmnParseTest {
 
   @Mock
-  ActivityImpl activity;
+  private ActivityImpl activity;
 
-  TimerOverridingBpmnParse parse;
+  private TimerOverridingBpmnParse parse;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     Context.setProcessEngineConfiguration(mock(ProcessEngineConfigurationImpl.class));
 
     TimerOverrideConfiguration config = new TimerOverrideConfiguration();
@@ -56,7 +54,7 @@ public class TimerOverridingBpmnParseTest {
       "timeDuration,testId2,P1D,PT2S",
       "timeDuration,testId1,P1D,P1D",
   })
-  public void overridesOrPreservesTimerDefinition(String type, String id, String expression, String expectedExpression) {
+  void overridesOrPreservesTimerDefinition(String type, String id, String expression, String expectedExpression) {
     Element timeElement = new Element("", null, type, null, null);
     timeElement.appendText(expression);
     Element timerElement = new Element("", null, "timerEventDefinition", null, null);
