@@ -1,13 +1,14 @@
 package ee.ringit.extras.camunda.timeroverride.sample;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class SampleCamundaBpmApplicationTest {
+class SampleCamundaBpmApplicationTest {
 
   @Test
-  public void contextLoads() {
+  void contextLoads() {
+    // intentionally left blank
   }
 
 }
