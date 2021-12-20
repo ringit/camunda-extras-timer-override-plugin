@@ -18,14 +18,14 @@ Just add the following dependency:
 <dependency>
     <groupId>ee.ringit.extras.camunda</groupId>
     <artifactId>timer-override-plugin-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
 **Gradle**
 
 ```groovy
-implementation 'ee.ringit.extras.camunda:timer-override-plugin-spring-boot-starter:1.0.0'
+implementation 'ee.ringit.extras.camunda:timer-override-plugin-spring-boot-starter:1.0.1'
 ```
 
 Additionally, you **need to explicitly enable the plugin** by setting `camunda.bpm.timer.override.enabled=true`.
@@ -83,14 +83,14 @@ If you are not willing to use the starter, you can directly add this dependency:
 <dependency>
     <groupId>ee.ringit.extras.camunda</groupId>
     <artifactId>camunda-engine-timer-override-plugin</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
 *Gradle*
 
 ```groovy
-implementation 'ee.ringit.extras.camunda:timer-override-plugin:1.0.0'
+implementation 'ee.ringit.extras.camunda:timer-override-plugin:1.0.1'
 ```
 
 **Please note that this plugin depends on `camunda-engine-spring` either way.**
